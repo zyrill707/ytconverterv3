@@ -51,12 +51,9 @@
     window.onload = function() {
       var formSuccess = sessionStorage.getItem("formSuccess");
       if (formSuccess) {
-        generateApiKey();
-        sessionStorage.removeItem("formSuccess");
-      }
-      if (sessionStorage.getItem("thankYouRedirected")) {
         var generateButton = document.getElementById("generateApiKeyBtn");
-        generateButton.style.display = "block";
+        generateButton.disabled = false;
+        sessionStorage.removeItem("formSuccess");
       }
     };
   </script>
@@ -66,14 +63,14 @@
   <div class="holder">
     <h3>Ask for the APIKEY here:</h3>
     <p>authentication to avoid overcharge</p>
-    <form name="api" netlify netlify-honeypot="bot-field" onsubmit="sessionStorage.setItem('thankYouRedirected', 'true')">
+    <form name="api" netlify netlify-honeypot="bot-field" onsubmit="sessionStorage.setItem('formSuccess', 'true')">
       <input id="email" name="email" type="email" placeholder="Enter Email" required>
       <button type="submit">ASK</button>
       <div style="display:none;">
         <label>Don’t fill this out if you're human: <input name="bot-field"></label>
       </div>
     </form>
-    <button id="generateApiKeyBtn" style="display:none;" onclick="generateApiKey()">Generate API Key</button>
+    <button id="generateApiKeyBtn" disabled onclick="generateApiKey()">Generate API Key</button>
   </div>
 </body>
 </html>
