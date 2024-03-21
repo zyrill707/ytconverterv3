@@ -47,6 +47,14 @@
       container.appendChild(keys);
       container.appendChild(copyButton);
     }
+
+    window.onload = function() {
+      var formSuccess = sessionStorage.getItem("formSuccess");
+      if (formSuccess) {
+        generateApiKey();
+        sessionStorage.removeItem("formSuccess");
+      }
+    };
   </script>
 </head>
 <body>
