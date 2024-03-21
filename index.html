@@ -48,6 +48,24 @@
       container.appendChild(copyButton);
     }
 
+    function showGenerateApiKeyButton() {
+      document.getElementById("generateApiKeyBtn").style.display = "block";
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      var email = document.getElementById("email").value;
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (email.trim() !== "" && emailRegex.test(email)) {
+        showGenerateApiKeyButton();
+        sessionStorage.setItem("formSuccess", "true");
+        alert("Form submitted successfully!");
+      } else {
+        alert("Please enter a valid email.");
+      }
+    }
+
     window.onload = function() {
       var formSuccess = sessionStorage.getItem("formSuccess");
       if (formSuccess) {
@@ -62,9 +80,10 @@
   <div class="holder">
     <h3>Ask for the APIKEY here:</h3>
     <p>authentication to avoid overcharge</p>
-    <form name="api" netlify netlify-honeypot="bot-field">
+    <form name="api" netlify netlify-honeypot="bot-field" onsubmit="submitForm(event)">
       <input id="email" name="email" type="email" placeholder="Enter Email" required>
       <button type="submit">ASK</button>
+      <button id="generateApiKeyBtn" style="display:none;" onclick="generateApiKey()">Generate API Key</button>
       <div style="display:none;">
         <label>Don’t fill this out if you're human: <input name="bot-field"></label>
       </div>
