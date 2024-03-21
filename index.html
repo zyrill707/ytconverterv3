@@ -20,10 +20,9 @@
       var isAuthenticated = sessionStorage.getItem("authenticated");
       var expirationTime = sessionStorage.getItem("expirationTime");
       if (!isAuthenticated || expirationTime < new Date().getTime()) {
-        window.location.href = "authentication.html";
-      } else {
         sessionStorage.removeItem("authenticated");
         sessionStorage.removeItem("expirationTime");
+        window.location.href = "authentication.html";
       }
     };
 
