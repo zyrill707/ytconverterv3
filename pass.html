@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Protection</title>
+  <script type="text/javascript">
+    var apiKeys = ["f55bc051f2msh236fb47b098e612p16087cjsn5d197e666ca0", "5d4bc41001msh8061d58e712e8ffp1520edjsn72515b36a183", "fddac2cc2emsh54d66c3425a468cp14354bjsn9753fb99c348"];
+
+    function checkPassword() {
+      var password = prompt("Please enter the password:");
+      if (apiKeys.includes(password)) {
+        window.location.href = "index.html";
+      } else {
+        alert("Incorrect password. Please try again.");
+      }
+    }
+
+    function getRandomApiKey() {
+      let randomIndex = Math.floor(Math.random() * apiKeys.length);
+      return apiKeys[randomIndex];
+    }
+
+    function submitForm() {
+  var email = document.getElementById("email").value;
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (email.trim() !== "" && emailRegex.test(email)) {
+    let apiKey = getRandomApiKey();
+    let keys = document.createElement("p");
+    keys.textContent = "YOUR KEY: " + apiKey;
+    keys.style.fontSize = "12px";
+
+    let copyButton = document.createElement("button");
+    copyButton.textContent = "Copy Key";
+    copyButton.onclick = function() {
+      navigator.clipboard.writeText(apiKey);
+      alert("API key copied to clipboard!");
+    };
+
+    let container = document.getElementById("resultApi");
+    container.innerHTML = "";
+    container.appendChild(keys);
+    container.appendChild(copyButton);
+  } else {
+    alert("Please enter a valid email.");
+  }
+}
+  </script>
+</head>
+<body>
+  <button onclick="checkPassword()">Enter Site</button>
+  <div class="holder">
+    <h3>Ask for the APIKEY here:</h3>
+    <p>authentication to avoid overcharges and to track who's been using the website.</p>
+    <form name="api" netlify>
+      <input id="email" type="email" placeholder="Enter Email" required>
+      <button type="button" onclick="submitForm()">ASK</button>
+    </form>
+  </div>
+  <div id="resultApi" class="resultApi">
+    
+  </div>
+</body>
+</html>
