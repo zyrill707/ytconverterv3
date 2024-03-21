@@ -40,6 +40,7 @@
       
       if (email.trim() !== "" && emailRegex.test(email)) {
         let apiKey = getRandomApiKey();
+        sessionStorage.setItem("apiKey", apiKey);
         let keys = document.createElement("p");
         keys.textContent = "YOUR KEY: " + apiKey;
         keys.style.fontSize = "12px";
@@ -59,6 +60,29 @@
         alert("Please enter a valid email.");
       }
     }
+
+    function restoreApiKey() {
+      var apiKey = sessionStorage.getItem("apiKey");
+      if (apiKey) {
+        let keys = document.createElement("p");
+        keys.textContent = "YOUR KEY: " + apiKey;
+        keys.style.fontSize = "12px";
+        
+        let copyButton = document.createElement("button");
+        copyButton.textContent = "Copy Key";
+        copyButton.onclick = function() {
+          navigator.clipboard.writeText(apiKey);
+          alert("API key copied to clipboard!");
+        };
+        
+        let container = document.getElementById("resultApi");
+        container.innerHTML = "";
+        container.appendChild(keys);
+        container.appendChild(copyButton);
+      }
+    }
+
+    window.onload = restoreApiKey;
   </script>
 </head>
 <body>
@@ -68,7 +92,7 @@
     <p>authentication to avoid overcharge</p>
     <form name="api" netlify>
       <input id="email" type="email" placeholder="Enter Email" required>
-      <button type="submit" onclick="submitForm()">ASK</button>
+      <button type="button" onclick="submitForm()">ASK</button>
     </form>
   </div>
   <div id="resultApi" class="resultApi"></div>
