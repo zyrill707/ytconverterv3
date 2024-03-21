@@ -53,13 +53,13 @@
       if (formSuccess) {
         var generateButton = document.getElementById("generateApiKeyBtn");
         generateButton.disabled = false;
-        sessionStorage.removeItem("formSuccess");
       }
     };
 
     function enableGenerateButton() {
       var generateButton = document.getElementById("generateApiKeyBtn");
       generateButton.disabled = false;
+      sessionStorage.setItem("formSuccess", "true");
     }
   </script>
 </head>
