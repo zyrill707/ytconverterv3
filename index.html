@@ -11,7 +11,7 @@
       if (apiKeys.includes(password) || customApiKey.includes(password)) {
         sessionStorage.setItem("authenticated", "true");
         sessionStorage.setItem("expirationTime", new Date().getTime() + 60000);
-        window.location.href = "index.html";
+        window.location.href = "authentication.html";
       } else {
         alert("Incorrect password. Please try again.");
       }
@@ -25,7 +25,7 @@
         sessionStorage.setItem("redirected", "true");
         sessionStorage.removeItem("authenticated");
         sessionStorage.removeItem("expirationTime");
-        window.location.href = "pass.html";
+        window.location.href = "index.html";
       }
     }
 
