@@ -58,7 +58,6 @@
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       
       if (email.trim() !== "" && emailRegex.test(email)) {
-        showGenerateApiKeyButton();
         sessionStorage.setItem("formSuccess", "true");
         alert("Form submitted successfully!");
       } else {
