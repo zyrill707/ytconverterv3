@@ -51,8 +51,7 @@
     window.onload = function() {
       var formSuccess = sessionStorage.getItem("formSuccess");
       if (formSuccess) {
-        var generateButton = document.getElementById("generateApiKeyBtn");
-        generateButton.disabled = false;
+        document.getElementById("generateApiKeyBtn").removeAttribute("disabled");
         sessionStorage.removeItem("formSuccess");
       }
     };
