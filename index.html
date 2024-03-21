@@ -9,7 +9,8 @@
       var password = prompt("Please enter the password:");
       if (apiKeys.includes(password)) {
         sessionStorage.setItem("authenticated", "true");
-        window.location.href = "pass.html";
+        sessionStorage.setItem("expirationTime", new Date().getTime() + 60000);
+        window.location.href = "index.html";
       } else {
         alert("Incorrect password. Please try again.");
       }
@@ -17,19 +18,19 @@
 
     window.onload = function() {
       var isAuthenticated = sessionStorage.getItem("authenticated");
-      if (!isAuthenticated) {
+      var expirationTime = sessionStorage.getItem("expirationTime");
+      if (!isAuthenticated || expirationTime < new Date().getTime()) {
         window.location.href = "authentication.html";
       } else {
         sessionStorage.removeItem("authenticated");
+        sessionStorage.removeItem("expirationTime");
       }
     };
 
     function getRandomApiKey() {
       let randomIndex = Math.floor(Math.random() * apiKeys.length);
       let apiKey = apiKeys[randomIndex];
-      let expirationTime = new Date();
-      expirationTime.setMinutes(expirationTime.getMinutes() + 1); // Set expiration time to 1 hour from now
-      return { key: apiKey, expiration: expirationTime };
+      return apiKey;
     }
 
     function submitForm() {
@@ -37,11 +38,9 @@
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       
       if (email.trim() !== "" && emailRegex.test(email)) {
-        let apiKeyObj = getRandomApiKey();
-        let apiKey = apiKeyObj.key;
-        let expirationTime = apiKeyObj.expiration;
+        let apiKey = getRandomApiKey();
         let keys = document.createElement("p");
-        keys.textContent = "YOUR KEY: " + apiKey + " (Expires: " + expirationTime.toLocaleString() + ")";
+        keys.textContent = "YOUR KEY: " + apiKey;
         keys.style.fontSize = "12px";
         
         let copyButton = document.createElement("button");
@@ -68,11 +67,9 @@
     <p>authentication to avoid overcharge</p>
     <form name="api" netlify>
       <input id="email" type="email" placeholder="Enter Email" required>
-      <button type="button" onclick="submitForm()">ASK</button>
+      <button type="submit" onclick="submitForm()">ASK</button>
     </form>
   </div>
-  <div id="resultApi" class="resultApi">
-    
-  </div>
+  <div id="resultApi" class="resultApi"></div>
 </body>
 </html>
