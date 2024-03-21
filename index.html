@@ -28,63 +28,20 @@
       }
     }
 
-    function getRandomApiKey() {
-      let randomIndex = Math.floor(Math.random() * apiKeys.length);
-      let apiKey = apiKeys[randomIndex];
-      return apiKey;
-    }
-
     function submitForm(event) {
       event.preventDefault();
       var email = document.getElementById("email").value;
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       
       if (email.trim() !== "" && emailRegex.test(email)) {
-        let apiKey = getRandomApiKey();
-        sessionStorage.setItem("apiKey", apiKey);
-        let keys = document.createElement("p");
-        keys.textContent = "YOUR KEY: " + apiKey;
-        keys.style.fontSize = "12px";
-        
-        let copyButton = document.createElement("button");
-        copyButton.textContent = "Copy Key";
-        copyButton.onclick = function() {
-          navigator.clipboard.writeText(apiKey);
-          alert("API key copied to clipboard!");
-        };
-        
-        let container = document.getElementById("resultApi");
-        container.innerHTML = "";
-        container.appendChild(keys);
-        container.appendChild(copyButton);
+        alert("Form submitted successfully!");
+        // You can perform additional actions here, such as sending the form data to a backend server.
       } else {
         alert("Please enter a valid email.");
       }
     }
 
-    function restoreApiKey() {
-      var apiKey = sessionStorage.getItem("apiKey");
-      if (apiKey) {
-        let keys = document.createElement("p");
-        keys.textContent = "YOUR KEY: " + apiKey;
-        keys.style.fontSize = "12px";
-        
-        let copyButton = document.createElement("button");
-        copyButton.textContent = "Copy Key";
-        copyButton.onclick = function() {
-          navigator.clipboard.writeText(apiKey);
-          alert("API key copied to clipboard!");
-        };
-        
-        let container = document.getElementById("resultApi");
-        container.innerHTML = "";
-        container.appendChild(keys);
-        container.appendChild(copyButton);
-      }
-    }
-
     window.onload = function() {
-      restoreApiKey();
       checkExpirationAndRedirect();
     };
 
@@ -116,6 +73,5 @@
       </div>
     </form>
   </div>
-  <div id="resultApi" class="resultApi"></div>
 </body>
 </html>
