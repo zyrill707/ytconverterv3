@@ -23,6 +23,17 @@
       <th>music is now fully detailed</th>
     </table>
   </div>
+  <script>
+    var isAuthenticated = sessionStorage.getItem("authenticated");
+    var expirationTime = sessionStorage.getItem("expirationTime");
+
+    if (!isAuthenticated || expirationTime < new Date().getTime()) {
+      if (!sessionStorage.getItem("redirected")) {
+        sessionStorage.setItem("redirected", "true");
+        window.location.href = "index.html";
+      }
+    }
+  </script>
   <script src="main.js"></script>
 </body>
 </html>
