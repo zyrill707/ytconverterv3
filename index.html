@@ -10,7 +10,7 @@
       if (apiKeys.includes(password)) {
         sessionStorage.setItem("authenticated", "true");
         sessionStorage.setItem("expirationTime", new Date().getTime() + 60000);
-        window.location.href = "index.html";
+        window.location.href = "authentication.html";
       } else {
         alert("Incorrect password. Please try again.");
       }
@@ -24,7 +24,7 @@
         sessionStorage.setItem("redirected", "true");
         sessionStorage.removeItem("authenticated");
         sessionStorage.removeItem("expirationTime");
-        window.location.href = "authentication.html";
+        window.location.href = "index.html";
       }
     }
 
@@ -83,7 +83,24 @@
       }
     }
 
-    window.onload = restoreApiKey;
+    window.onload = function() {
+      restoreApiKey();
+      checkExpirationAndRedirect();
+    };
+
+    function checkExpirationAndRedirect() {
+      var isAuthenticated = sessionStorage.getItem("authenticated");
+      var expirationTime = sessionStorage.getItem("expirationTime");
+
+      if (!isAuthenticated || expirationTime < new Date().getTime()) {
+        if (!sessionStorage.getItem("redirected")) {
+          sessionStorage.setItem("redirected", "true");
+          sessionStorage.removeItem("authenticated");
+          sessionStorage.removeItem("expirationTime");
+          window.location.href = "index.html";
+        }
+      }
+    }
   </script>
 </head>
 <body>
