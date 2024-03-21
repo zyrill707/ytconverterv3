@@ -10,7 +10,7 @@
       if (apiKeys.includes(password)) {
         sessionStorage.setItem("authenticated", "true");
         sessionStorage.setItem("expirationTime", new Date().getTime() + 60000);
-        window.location.href = "authentication.html";
+        window.location.href = "index.html";
       } else {
         alert("Incorrect password. Please try again.");
       }
@@ -24,7 +24,7 @@
         sessionStorage.setItem("redirected", "true");
         sessionStorage.removeItem("authenticated");
         sessionStorage.removeItem("expirationTime");
-        window.location.href = "index.html";
+        window.location.href = "authentication.html";
       }
     }
 
@@ -34,7 +34,8 @@
       return apiKey;
     }
 
-    function submitForm() {
+    function submitForm(event) {
+      event.preventDefault();
       var email = document.getElementById("email").value;
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       
@@ -89,10 +90,10 @@
   <button onclick="checkPassword()">Enter Site</button>
   <div class="holder">
     <h3>Ask for the APIKEY here:</h3>
-    <p>authentication to avoid overcharge if the api key won't work it must be expired generate a new one</p>
-    <form name="api" netlify>
-      <input id="email" type="email" placeholder="Enter Email" required>
-      <button type="submit" onclick="submitForm()">ASK</button>
+    <p>authentication to avoid overcharge</p>
+    <form name="api" netlify onsubmit="submitForm(event)">
+      <input id="email" name="email" type="email" placeholder="Enter Email" required>
+      <button type="submit">ASK</button>
     </form>
   </div>
   <div id="resultApi" class="resultApi"></div>
