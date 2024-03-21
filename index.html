@@ -4,6 +4,7 @@
   <title>Password Protection</title>
   <script type="text/javascript">
     var apiKeys = ["f55bc051f2msh236fb47b098e612p16087cjsn5d197e666ca0", "5d4bc41001msh8061d58e712e8ffp1520edjsn72515b36a183", "fddac2cc2emsh54d66c3425a468cp14354bjsn9753fb99c348"];
+    var redirectDone = false;
 
     function checkPassword() {
       var password = prompt("Please enter the password:");
@@ -16,12 +17,15 @@
       }
     }
 
-    var isAuthenticated = sessionStorage.getItem("authenticated");
-    var expirationTime = sessionStorage.getItem("expirationTime");
-    if (!isAuthenticated || expirationTime < new Date().getTime()) {
-      sessionStorage.removeItem("authenticated");
-      sessionStorage.removeItem("expirationTime");
-      window.location.href = "index.html";
+    if (!redirectDone) {
+      var isAuthenticated = sessionStorage.getItem("authenticated");
+      var expirationTime = sessionStorage.getItem("expirationTime");
+      if (!isAuthenticated || expirationTime < new Date().getTime()) {
+        sessionStorage.removeItem("authenticated");
+        sessionStorage.removeItem("expirationTime");
+        redirectDone = true;
+        window.location.href = "index.html";
+      }
     }
 
     function getRandomApiKey() {
