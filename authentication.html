@@ -12,9 +12,7 @@
     <input id="userInput" type="text" placeholder="Enter URL" required>
     <button id="submitBtn">submit</button>
   </div>
-  <div id="result" class="result">
-
-  </div>
+  <div id="result" class="result"></div>
   <div class="feautures">
     <label>Features:</label>
     <table>
@@ -33,6 +31,19 @@
         window.location.href = "index.html";
       }
     }
+
+    function checkAuthenticationAndRedirect() {
+      isAuthenticated = sessionStorage.getItem("authenticated");
+      expirationTime = sessionStorage.getItem("expirationTime");
+      if (!isAuthenticated || expirationTime < new Date().getTime()) {
+        if (!sessionStorage.getItem("redirected")) {
+          sessionStorage.setItem("redirected", "true");
+          window.location.href = "index.html";
+        }
+      }
+    }
+
+    setInterval(checkAuthenticationAndRedirect, 1000);
   </script>
   <script src="main.js"></script>
 </body>
