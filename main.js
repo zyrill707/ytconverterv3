@@ -1,4 +1,15 @@
+function changeText(){
+  var button = document.getElementById("submitBtn");
+  button.textContent = "submitting"
+  button.disabled = true;
+}
+function revertText(){
+  var button = document.getElementById("submitBtn");
+  button.textContent = "Submit";
+  button.disabled = false;
+}
 document.getElementById("submitBtn").addEventListener('click', function() {
+  changeText()
   let userInput = document.getElementById("userInput").value;
   let videoId = extractYouTubeId(userInput);
 
@@ -32,11 +43,11 @@ document.getElementById("submitBtn").addEventListener('click', function() {
       let stats = document.createElement('p');
       stats.textContent = data.status;
       stats.style.color = data.status === 'OK' ? 'red' : 'green';
-
+      revertText()
       let downloadBtn = document.createElement('button');
       downloadBtn.style.padding = "5px 5px";
       downloadBtn.style.marginTop = "20px";
-      downloadBtn.textContent = "DOWNLOAD"
+      downloadBtn.textContent = "REDIRECT"
       downloadBtn.addEventListener('click', function() {
         let url = document.createElement('a');
         url.href = data.link;
