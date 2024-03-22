@@ -4,13 +4,13 @@
   <title>Password Protection</title>
   <script type="text/javascript">
     var apiKeys = [
-      { key: "f55bc051f2msh236fb47b098e612p16087cjsn5d197e666ca0", usageLimit: 3, remainingUsage: 3 },
-      { key: "5d4bc41001msh8061d58e712e8ffp1520edjsn72515b36a183", usageLimit: 3, remainingUsage: 3 },
-      { key: "fddac2cc2emsh54d66c3425a468cp14354bjsn9753fb99c348", usageLimit: 3, remainingUsage: 3 }
+      { key: "f55bc051f2msh236fb47b098e612p16087cjsn5d197e666ca0", remainingUsage: 5 },
+      { key: "5d4bc41001msh8061d58e712e8ffp1520edjsn72515b36a183", remainingUsage: 5 },
+      { key: "fddac2cc2emsh54d66c3425a468cp14354bjsn9753fb99c348", remainingUsage: 5 }
     ];
     var customApiKey = ["chanel", "bianca"];
 
-    var generateCooldown = 120000; // 2 minutes cooldown for generating new API keys
+    var generateCooldown = 120000;
     var lastGeneratedTime = 0;
 
     function checkPassword() {
@@ -22,14 +22,18 @@
         if (api.key === password && api.remainingUsage > 0) {
           apiKeyFound = true;
           sessionStorage.setItem("authenticated", "true");
-          sessionStorage.setItem("expirationTime", new Date().getTime() + 120000); // Set expiration time to 2 minutes from now
+          sessionStorage.setItem("expirationTime", new Date().getTime() + 120000);
+          api.remainingUsage--;
           window.location.href = "authentication.html";
+        } else if (api.key === password && api.remainingUsage <= 0) {
+          apiKeyFound = true;
+          alert("This API key has reached its usage limit.");
         }
       });
 
       if (!apiKeyFound && customApiKey.includes(password)) {
         sessionStorage.setItem("authenticated", "true");
-        sessionStorage.setItem("expirationTime", new Date().getTime() + 120000); // Set expiration time to 2 minutes from now
+        sessionStorage.setItem("expirationTime", new Date().getTime() + 120000);
         window.location.href = "authentication.html";
       }
 
