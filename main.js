@@ -42,7 +42,11 @@ document.getElementById("submitBtn").addEventListener('click', function() {
       artist.textContent = data.author;
       let stats = document.createElement('p');
       stats.textContent = data.status;
-      stats.style.color = data.status === 'OK' ? 'red' : 'green';
+      if (data.status === 'OK') {
+        stats.style.color = 'green';
+      } else {
+        stats.style.color = 'red';
+      }
       revertText()
       let downloadBtn = document.createElement('button');
       downloadBtn.style.padding = "5px 5px";
