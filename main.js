@@ -42,7 +42,7 @@ document.getElementById("submitBtn").addEventListener('click', function() {
       artist.textContent = data.author;
       let stats = document.createElement('p');
       stats.textContent = data.status;
-      if (data.status === 'OK') {
+      if (data.status.toUpperCase() === 'OK') {
         stats.style.color = 'green';
       } else {
         stats.style.color = 'red';
