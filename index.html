@@ -30,7 +30,7 @@
       if (!apiKeyFound && customApiKey.includes(password)) {
         sessionStorage.setItem("authenticated", "true");
         sessionStorage.setItem("expirationTime", new Date().getTime() + 120000); // Set expiration time to 2 minutes from now
-        window.location.href = "index.html";
+        window.location.href = "authentication.html";
       }
 
       if (!apiKeyFound) {
@@ -46,7 +46,7 @@
         sessionStorage.setItem("redirected", "true");
         sessionStorage.removeItem("authenticated");
         sessionStorage.removeItem("expirationTime");
-        window.location.href = "authentication.html";
+        window.location.href = "index.html";
       }
     }
 
