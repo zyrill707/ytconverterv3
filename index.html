@@ -3,17 +3,38 @@
 <head>
   <title>Password Protection</title>
   <script type="text/javascript">
-    var apiKeys = ["f55bc051f2msh236fb47b098e612p16087cjsn5d197e666ca0", "5d4bc41001msh8061d58e712e8ffp1520edjsn72515b36a183", "fddac2cc2emsh54d66c3425a468cp14354bjsn9753fb99c348"];
+    var apiKeys = [
+      { key: "f55bc051f2msh236fb47b098e612p16087cjsn5d197e666ca0", usageLimit: 3, remainingUsage: 3 },
+      { key: "5d4bc41001msh8061d58e712e8ffp1520edjsn72515b36a183", usageLimit: 3, remainingUsage: 3 },
+      { key: "fddac2cc2emsh54d66c3425a468cp14354bjsn9753fb99c348", usageLimit: 3, remainingUsage: 3 }
+    ];
     var customApiKey = ["chanel", "bianca"];
+
+    var generateCooldown = 120000; // 2 minutes cooldown for generating new API keys
+    var lastGeneratedTime = 0;
 
     function checkPassword() {
       var password = prompt("Please enter the password:");
-      if (apiKeys.includes(password) || customApiKey.includes(password)) {
+      var currentTime = new Date().getTime();
+      var apiKeyFound = false;
+
+      apiKeys.forEach(function(api) {
+        if (api.key === password && api.remainingUsage > 0) {
+          apiKeyFound = true;
+          sessionStorage.setItem("authenticated", "true");
+          sessionStorage.setItem("expirationTime", new Date().getTime() + 120000); // Set expiration time to 2 minutes from now
+          window.location.href = "index.html";
+        }
+      });
+
+      if (!apiKeyFound && customApiKey.includes(password)) {
         sessionStorage.setItem("authenticated", "true");
-        sessionStorage.setItem("expirationTime", new Date().getTime() + 60000);
+        sessionStorage.setItem("expirationTime", new Date().getTime() + 120000); // Set expiration time to 2 minutes from now
         window.location.href = "authentication.html";
-      } else {
-        alert("Incorrect password. Please try again.");
+      }
+
+      if (!apiKeyFound) {
+        alert("Incorrect password or API key usage limit reached. Please try again later.");
       }
     }
 
@@ -25,28 +46,36 @@
         sessionStorage.setItem("redirected", "true");
         sessionStorage.removeItem("authenticated");
         sessionStorage.removeItem("expirationTime");
-        window.location.href = "index.html";
+        window.location.href = "authentication.html";
       }
     }
 
     function generateApiKey() {
-      let randomIndex = Math.floor(Math.random() * apiKeys.length);
-      let apiKey = apiKeys[randomIndex];
-      let keys = document.createElement("p");
-      keys.textContent = "YOUR KEY: " + apiKey;
-      keys.style.fontSize = "12px";
-      
-      let copyButton = document.createElement("button");
-      copyButton.textContent = "Copy Key";
-      copyButton.onclick = function() {
-        navigator.clipboard.writeText(apiKey);
-        alert("API key copied to clipboard!");
-      };
-      
-      let container = document.getElementById("resultApi");
-      container.innerHTML = "";
-      container.appendChild(keys);
-      container.appendChild(copyButton);
+      var currentTime = new Date().getTime();
+      if (currentTime - lastGeneratedTime >= generateCooldown) {
+        let randomIndex = Math.floor(Math.random() * apiKeys.length);
+        let apiKey = apiKeys[randomIndex].key;
+        let keys = document.createElement("p");
+        keys.textContent = "YOUR KEY: " + apiKey;
+        keys.style.fontSize = "12px";
+
+        let copyButton = document.createElement("button");
+        copyButton.textContent = "Copy Key";
+        copyButton.onclick = function() {
+          navigator.clipboard.writeText(apiKey);
+          alert("API key copied to clipboard!");
+        };
+
+        let container = document.getElementById("resultApi");
+        container.innerHTML = "";
+        container.appendChild(keys);
+        container.appendChild(copyButton);
+
+        lastGeneratedTime = currentTime;
+      } else {
+        var remainingTime = (generateCooldown - (currentTime - lastGeneratedTime)) / 1000;
+        alert("Please wait " + remainingTime + " seconds before generating a new API key.");
+      }
     }
 
     window.onload = function() {
