@@ -110,6 +110,38 @@
       sessionStorage.setItem("formSuccess", "true");
     }
   </script>
+  <style>
+    body{
+      background:url("wallpaper.gif");
+      background-repeat:no-repeat;
+      background-size: contain;
+      background-position: top;
+      background-size:900px 1000px;
+    }
+    .holder input{
+      background:transparent;
+      border-color:violet;
+      color:white;
+      margin-bottom:6px;
+      margin-right:5px;
+      font-size:15px;
+    }
+    .holder input:focus{
+      outline:none;
+    }
+    .holder h3,p{
+      color:violet;
+      border-bottom:1px solid gray;
+      width:300px;
+      font-weight: bold;
+    }
+    .holder button{
+  font-weight: bold;
+  background:linear-gradient(#fff, #fff) padding-box,
+  linear-gradient(45deg, #0fd850, #f9f047) border-box;
+  border 5px solid transparent;
+    }
+  </style>
 </head>
 <body>
   <button onclick="checkPassword()">Enter Site</button>
