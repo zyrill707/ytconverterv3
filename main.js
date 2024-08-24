@@ -2,11 +2,15 @@ function changeText(){
   var button = document.getElementById("submitBtn");
   button.textContent = "submitting"
   button.disabled = true;
+  let load = document.getElementById("loading");
+  load.style.display = "block";
 }
 function revertText(){
   var button = document.getElementById("submitBtn");
   button.textContent = "Submit";
   button.disabled = false;
+  let load = document.getElementById("loading");
+  load.style.display = "none";
 }
 document.getElementById("submitBtn").addEventListener('click', function() {
   changeText()
