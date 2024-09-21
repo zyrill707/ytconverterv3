@@ -55,6 +55,7 @@ document.getElementById("submitBtn").addEventListener('click', function() {
       let downloadBtn = document.createElement('button');
       downloadBtn.style.padding = "5px 5px";
       downloadBtn.style.marginTop = "20px";
+      downloadBtn.className = "downloadBtn";
       downloadBtn.textContent = "REDIRECT"
       downloadBtn.addEventListener('click', function() {
         let url = document.createElement('a');

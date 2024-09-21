@@ -141,16 +141,32 @@
   linear-gradient(45deg, #0fd850, #f9f047) border-box;
   border 5px solid transparent;
     }
+    #generateApiKeyBtn{
+  color:lavender;
+  background: linear-gradient(340deg, purple, violet, pink);
+}
+.btn{
+  border:1px solid gray;
+  border-radius:12%;
+}
+.enterBtn{
+  border-radius: 6%;
+  border:1px solid gray;
+  background:linear-gradient(304deg, purple, purple, pink, violet);
+  color:white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
   </style>
 </head>
 <body>
-  <button onclick="checkPassword()">Enter Site</button>
+  <button class="enterBtn" onclick="checkPassword()">Enter Site</button>
   <div class="holder">
     <h3>Ask for the APIKEY here:</h3>
     <p>authentication to avoid overcharge</p>
     <form name="api" netlify netlify-honeypot="bot-field" onsubmit="enableGenerateButton()">
       <input id="email" name="email" type="email" placeholder="Enter Email" required>
-      <button type="submit">ASK</button>
+      <button class="btn" type="submit">ASK</button>
       <div style="display:none;">
         <label>Don’t fill this out if you're human: <input name="bot-field"></label>
       </div>
